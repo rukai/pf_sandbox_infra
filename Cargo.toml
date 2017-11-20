@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "website",
+    "matchmaking",
+    "discord-bot"
+]

@@ -1,0 +1,17 @@
+{{#*inline "page"}}
+<h1>Builds</h1>
+<table>
+    {{#each builds}}
+        <tr>{{this.date_unix}}</tr>
+        <tr>{{this.hash}}</tr>
+        <tr>{{this.message}}</tr>
+        <tr>
+            {{#each this.os}}
+                {{ this }}
+            {{/each}}
+        </tr>
+    {{/each}}
+</table>
+{{/inline}}
+
+{{~> base title="PF Sandbox | Builds"~}}

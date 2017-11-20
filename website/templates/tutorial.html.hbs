@@ -1,0 +1,213 @@
+{{#*inline "page"}}
+<h1>Editor Tutorial</h1>
+
+<p>Following this tutorial is a great way to get started with editing fighters in PF Sandbox.
+For a full reference of every operation check out the <a href="manual">Manual</a>.</p>
+
+<h2>Setup</h2>
+
+<p>It is important to create your own package to put your fighters in.
+If you instead modify the example package, when an update is released for it, your modifications will be lost!</p>
+
+<h3>I have 2 GC controllers</h3>
+
+<p>Press '~' to open the command line in PF Sandbox.
+run command <code>:open_package my_package</code></p>
+
+<p>Insert a controller in ports 1 and 2.
+Then start a local game with the example fighter as player 1 and 2.</p>
+
+<h3>I only have 1 GC controller</h3>
+
+<p>If you only have one GC controller you can force start a game with 2 fighters by launching PF Sandbox from your OS's command line: <code>pf_sandbox my_package -p2</code>
+You can then replug your controller between ports 1 and 2 to swap control of fighters.</p>
+
+<h2>Basics</h2>
+
+<p>It will look like there is a stage with no fighters.
+However the fighters are there, they just have no collision boxes to make them visible.
+Start off by ensuring your controller is in port 1.
+Press <code>1</code> to select player 1.
+Now press F8 to toggle on ECB (Environment Collision Box) display
+Now we can see player 1's location as the newly appeared ECB.
+Now press F8 again to toggle it off.</p>
+
+<p>Turn on the ECB display for all players.</p>
+
+<ol>
+    <li>Press 1</li>
+    <li>Press F8</li>
+    <li>Press 2</li>
+    <li>Press F8</li>
+</ol>
+
+<p>Unpause and move your fighter around.</p>
+
+<h2>Player states</h2>
+
+<p>Pause the game, select your player (1) before continuing.
+Press F3, to enable player state debug information.
+You can now see debug info at the top of the screen.</p>
+
+<p>Hold X on your controller and press spacebar on your keyboard.
+Your action will go from Idle -> JumpSquat.
+Press spacebar again your action will go from JumpSquat -> JumpF.
+Press spacebar again and again until your fighter lands.</p>
+
+<h2>Playing with colboxes</h2>
+
+<p>Ensure your fighter is in its Idle state again.
+Position your cursor, near your fighter (the green ECB), and press <code>F</code>.
+Player 1 should now have a colbox (Collision Box).</p>
+
+<p>Press F again somewhere else and notice that your new colbox is joined to the previous one.</p>
+
+<p>This time deselect your new colbox by left clicking empty space.
+Then press F again and notice your new colbox is not joined.</p>
+
+<p>Now select any colbox with left click.
+The colbox should be fully green.
+Use the square bracket keys, [ and ], to resize the selected colbox.</p>
+
+<p>Hold shift and left-click to select multiple hitboxes.
+Press the A key.
+Now you can move the the selected colboxes by moving your mouse.
+Left click to confirm the new position.</p>
+
+<p>Click and drag, with right click to select multiple colboxes.
+Select all your colboxes and press D to delete them all.</p>
+
+<p>Play around with colboxes to your hearts content, then test out your creation in game.</p>
+
+<h2>Copying frames</h2>
+
+<p>At the conclusion of your testing you would have surely noticed that your beloved colboxes can only be seen while the player is standing still.
+Lets fix that.</p>
+
+<p>You could manually recreate your design on every action the fighter has, but thats a lot of wasted effort.
+Instead lets copy the colboxes in the fighters idle state.
+To all his other states as a base to work on.</p>
+
+<p>Ensure the fighter is in his idle state, the game is paused and your player is selected.
+Press V to copy the current frame.
+Press X on your controller and space on your keyboard.
+Now your player is in his jumpsquat frames.
+Press B on your keyboard to paste the copied frame here.</p>
+
+<p>Repeat this process for all actions you can think of.
+Test out your fighter again, you can even disable the ECB (F3) if you want.</p>
+
+<h2>Multi-frame actions</h2>
+
+<p>Return your player to the idle state, pause the game, and select your player.
+Notice how the player state debug information says <code>frame: 0/0</code>.
+This means the action Idle has only 1 frame and we are currently on that one frame.
+We start counting at 0 here so that it fits in with other systems. (TODO: Although if Lua is used as the scripting language then it should really be 1-indexed)</p>
+
+<p>Lets add another frame to this action by pressing M.
+We can now see we are on frame 1 of 1.
+Make some changes to the colboxes on this frame to differentiate it from frame 0.</p>
+
+<p>Press M again and now we are on frame 2 of 2.
+Once again make some changes to the colboxes.</p>
+
+<p>Press space to advance through our 3-frame animation cycle.
+We can see the debug info go <code>frame 0/2</code>, <code>frame 1/2</code>, <code>frame 2/2</code> and then restart at <code>frame 0/2</code>.</p>
+
+<p>For some actions this will affect game logic.
+Try adding 30 frames to your fighters jumpsquat action.
+Notice how each frame needs to complete before the fighter will lift off the ground.</p>
+
+<p>Restore your jumpsquat frames to something sensible by pressing N to delete frames, while in the jumpsquat action.</p>
+
+<h2>Camera</h2>
+
+<p>As you are editing your fighter you will want to manually control the camera to better see your fighter.
+Zoom in and out with the scroll wheel on your mouse.
+Reposition the camera with middle click.
+To give control of the camera back to PF Sandbox press Backspace.</p>
+
+<h2>Command Line</h2>
+
+<p>Press '~' to open the command line in PF Sandbox.</p>
+<p>A command looks like this:</p>
+<p><code>package:help</code></p>
+<p>We use the help command to learn what an object can do and what other objects it contains.
+By looking under the Accessors section, we can see that the package contains fighters, stages, meta, and rules.
+Lets further investigate fighters.</p>
+<p><code>package.fighters:help</code></p>
+
+<h2>Save/Reload</h2>
+<p>Run the command: <code>package:save</code>
+Wait for the 'Save completed successfully' message to appear.
+Close PF Sandbox and reopen it to verify that your changes are still there.</p>
+
+<p>Make a change to your fighter and then run: <code>package:reload</code>
+Verify that your fighter is the same as when you last ran <code>package:save</code></p>
+
+<h2>Keys &amp; Context</h2>
+
+<p>This is a keyed context vector of fighters, that means it contains multiple fighters. (accessible by both a key, an index and context)</p>
+<p>We can access a specific fighter via its filename, assuming you have a fighter with filename base_fighter.json then we can run:</p>
+<p><code>package.fighters["base_fighter.json"]:help</code></p>
+<p>But thats generally not useful. (We dont want to have to check the filename of the fighter we are editing.)
+Instead we make use of the context system.
+By using <code>?</code> as our key, we tell PF Sandbox to automatically choose the fighter to access via in game context.
+In this case it uses the fighter used by the player we have selected with 1234.</p>
+<p><code>package.fighters[?]:help</code></p>
+<p>If this doesnt display the fighter help, ensure you are in a game, pf sandbox is paused (spacebar) and you have selected a player (1)</p>
+
+<h2>Fighter data</h2>
+
+<p>The fighter help text shows a lot of interesting fighter properties that I am sure you are itching to play with.</p>
+<p>This will get the number of aerial jumps the fighter can do.</p>
+<p><code>package.fighters[?].air_jumps:get</code></p>
+<p>Run this command and try out the changes.</p>
+<p><code>package.fighters[?].air_jumps:set 99</code></p>
+<p>Try fiddling with this and other values you can find with the help command.</p>
+
+<h2>Descending the tree</h2>
+
+<p>Individual colboxes can be accessed and manipulated, however they are stored in an object in an object in an object in an object.
+To find them we are going to do some exploration with the help command.
+We see that the fighter contains an <code>actions</code> property which is a context vec.
+(once again this object contains multiple actions, however they are only accessible by index and context.)</p>
+<p><code>package.fighters[?].actions:help</code></p>
+<p>We can use an index to access a numbered element of the vector</p>
+<p><code>package.fighters[?].actions[0]:help</code></p>
+
+<p>However once again this is rarely useful so we stick to using context.
+This way we access the current action the selected player is in.</p>
+<p><code>package.fighters[?].actions[?]:help</code></p>
+<p>We can see two properties: iasa and frames.</p>
+<p><code>package.fighters[?].actions[?].frames[?]:help</code></p>
+<p>We can see the colboxes property among numerous other properties.</p>
+<p><code>package.fighters[?].actions[?].frames[?].colboxes:help</code></p>
+<p>Nice, now we know how to access colboxes, and (hopefully) better understand how frame data is structured.</p>
+
+<h2>Colbox resize</h2>
+
+<p>Now select a hitbox by clicking on it in pf_sandbox and run this command:</p>
+<p><code>package.fighters[?].actions[?].frames[?].colboxes[?].radius:set 10</code></p>
+
+<h2>Variants &amp; Hitboxes</h2>
+
+<p>Select a colbox and run this command:</p>
+<p><code>package.fighters[?].actions[?].frames[?].colboxes[?].role:variant Hit</code></p>
+<p>This changes the role of the colbox to be a hitbox.
+Test it out in game.</p>
+<p>Now that we have set the role to hit, we have access to more properties on the role.</p>
+<p><code>package.fighters[?].actions[?].frames[?].colboxes[?].role[0].bkb:set 9001</code></p>
+<p>We set the base knockback for the hitbox to 9001
+Test this out in game!</p>
+
+<h2>Menu/Game difference</h2>
+
+<p>While in game commands are run on the game object.
+While in menu commands are run on the menu object.
+Both contain the current package so you can always access that, but the rest is different.
+So commands that work in game wont necessarily work in the menu and vice versa.
+Use :help while in game and in menu to see the differences.</p>
+{{/inline}}
+
+{{~> base title="PF Sandbox | Editor Tutorial" page_tutorial=true ~}}

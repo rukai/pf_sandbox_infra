@@ -1,0 +1,9 @@
+[package]
+name = "discord-bot"
+version = "0.1.0"
+authors = ["Rukai <rubickent@gmail.com>"]
+
+[dependencies]
+#discord = "0.8"
+#discord-rs doesnt build on Arch Linux because uses old libraries.
+#Way forward seems to be replacing hyper with reqwest https://github.com/SpaceManiac/discord-rs/pull/147
