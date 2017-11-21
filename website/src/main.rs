@@ -1,16 +1,24 @@
 #![feature(plugin, decl_macro)]
 #![plugin(rocket_codegen)]
 
-extern crate rocket_contrib;
-extern crate rocket;
+             extern crate rocket_contrib;
+             extern crate rocket;
 #[macro_use] extern crate serde_derive;
+             extern crate git2;
 
 use rocket_contrib::Template;
 use rocket::response::NamedFile;
+use rocket::State;
 
 use std::path::{Path, PathBuf};
 use std::env;
 use std::ffi::OsStr;
+use std::sync::{RwLock, Arc};
+
+pub mod builds;
+pub mod files;
+
+use builds::{Commits};
 
 #[get("/")]
 fn index() -> Template {
@@ -33,27 +41,9 @@ fn tas() -> Template {
 }
 
 #[get("/builds")]
-fn builds() -> Template {
-    let netplay_build = Commit {
-        hash:      format!("1234"),
-        message:   format!("Hello world"),
-        os:        vec!(format!("Windows"), format!("Linux")),
-        date_unix: 0,
-    };
-
-    let builds = vec!(Commit {
-        hash:      format!("1234"),
-        message:   format!("Hello world"),
-        os:        vec!(format!("Windows"), format!("Linux")),
-        date_unix: 0,
-    });
-
-    let page = BuildsPage {
-        netplay_build,
-        builds
-    };
-
-    Template::render("builds", &page)
+fn builds(builds_rw: State<Arc<RwLock<Commits>>>) -> Template {
+    let builds: &Commits = &builds_rw.read().unwrap();
+    Template::render("builds", builds)
 }
 
 #[get("/static/<file..>")]
@@ -68,19 +58,10 @@ fn main() {
         println!("Wrong directory, dummy!");
         return;
     }
-    rocket::ignite().mount("/", routes![index, builds, tutorial, manual, tas, files]).attach(Template::fairing()).launch();
-}
-
-#[derive(Serialize)]
-struct BuildsPage {
-    netplay_build: Commit,
-    builds:    Vec<Commit>
-}
-
-#[derive(Serialize)]
-struct Commit {
-    hash:      String,
-    message:   String,
-    os:        Vec<String>,
-    date_unix: u64,
+    let builds = builds::build_reader();
+    rocket::ignite()
+        .manage(builds)
+        .mount("/", routes![index, builds, tutorial, manual, tas, files])
+        .attach(Template::fairing())
+        .launch();
 }

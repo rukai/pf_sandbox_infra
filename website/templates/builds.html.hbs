@@ -1,17 +1,46 @@
 {{#*inline "page"}}
-<h1>Builds</h1>
-<table>
-    {{#each builds}}
-        <tr>{{this.date_unix}}</tr>
-        <tr>{{this.hash}}</tr>
-        <tr>{{this.message}}</tr>
-        <tr>
-            {{#each this.os}}
-                {{ this }}
-            {{/each}}
-        </tr>
-    {{/each}}
-</table>
+
+{{#with netplay}}
+    <h1>Netplay Build</h1>
+    <table>
+        <td>{{date_unix}}</td>
+        <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{revision}}</a></td>
+        <td>{{message}}</td>
+        <td>
+            {{#if windows}}
+            Windows
+            {{/if}}
+        </td>
+        <td>
+            {{#if linux}}
+            Linux
+            {{/if}}
+        </td>
+    </table>
+{{/with}}
+
+<div id="buildlist">
+    <h1>Latest Builds</h1>
+    <table>
+        {{#each builds}}
+            <tr>
+                <td>{{date_unix}}</td>
+                <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{revision}}</a></td>
+                <td>{{message}}</td>
+                <td>
+                    {{#if windows}}
+                    Windows
+                    {{/if}}
+                </td>
+                <td>
+                    {{#if linux}}
+                    Linux
+                    {{/if}}
+                </td>
+            </tr>
+        {{/each}}
+    </table>
+</div>
 {{/inline}}
 
 {{~> base title="PF Sandbox | Builds"~}}
