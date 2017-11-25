@@ -1,6 +1,8 @@
+use std::fs;
 use std::sync::{RwLock, Arc};
 use std::thread;
 use std::time::Duration;
+use std::collections::HashSet;
 
 use git2::{Repository, Remote};
 
@@ -22,6 +24,9 @@ fn run(commits_rw: Arc<RwLock<Commits>>) {
         Err(_)   => Repository::clone(url, files::git_path()).unwrap(),
     };
 
+    // generate builds path if it doesnt exist
+    fs::create_dir_all(files::builds_path()).unwrap();
+
     let mut remote = repo.find_remote("origin").unwrap();
 
     loop {
@@ -34,6 +39,12 @@ fn attempt_update(repo: &Repository, remote: &mut Remote, commits_rw: Arc<RwLock
     let mut netplay: Option<Commit> = None;
     let mut builds = vec!();
 
+    // find available build zips
+    let mut build_zips = HashSet::new();
+    for entry in fs::read_dir(files::builds_path()).unwrap() {
+        build_zips.insert(entry.unwrap().file_name().into_string().unwrap());
+    }
+
     // checkout lastest origin/master
     if let Err(_) = remote.fetch(&["master"], None, None) {
         return; // Abort on network issues
@@ -43,11 +54,11 @@ fn attempt_update(repo: &Repository, remote: &mut Remote, commits_rw: Arc<RwLock
     let mut commit = repo.find_commit(latest_commit_oid).unwrap();
     loop {
         let build_commit = Commit {
-            revision: format!("alpha-201-DEADCAFE"),
-            hash:     format!("{}", commit.id()),
-            message:  commit.message().unwrap_or("NON-UTF8 MESSAGE").to_string(),
-            windows:  false,
-            linux:    true,
+            revision:  format!("alpha-201-DEADCAFE"),
+            hash:      format!("{}", commit.id()),
+            message:   commit.message().unwrap_or("NON-UTF8 MESSAGE").to_string(),
+            windows:   build_zips.contains(format!("{}_windows.zip", commit.id()).as_str()),
+            linux:     build_zips.contains(format!("{}_linux.zip", commit.id()).as_str()),
             date_unix: commit.time().seconds()
         };
         if netplay.is_none() /* && commit_has_netplay_tag */ {
