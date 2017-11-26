@@ -6,14 +6,15 @@ body {
     background-color: rgb(30, 30, 30);
 }
 
-td {
-    padding-right: 1rem;
-    padding-left: 1rem;
+.nowrap {
+    white-space: nowrap;
 }
 
-#buildlist {
-    margin-top: 3rem;
+.prewrap {
+    white-space: pre-wrap;
 }
+
+/* Landing page */
 
 .hook {
     font-size: 2rem;
@@ -26,4 +27,19 @@ td {
     padding-top: 1rem;
     padding-left: 1rem;
     padding-bottom: 1rem;
+}
+
+/* Builds table */
+
+td {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+tr.row-spacer {
+    height: 1.6rem;
+}
+
+#buildlist {
+    margin-top: 3rem;
 }

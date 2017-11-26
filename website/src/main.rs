@@ -5,6 +5,7 @@
              extern crate rocket;
 #[macro_use] extern crate serde_derive;
              extern crate git2;
+             extern crate chrono;
 
 use rocket_contrib::Template;
 use rocket::response::NamedFile;

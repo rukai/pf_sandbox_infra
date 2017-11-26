@@ -4,6 +4,7 @@ use std::thread;
 use std::time::Duration;
 use std::collections::HashSet;
 
+use chrono::NaiveDateTime;
 use git2::{Repository, Remote};
 
 use files;
@@ -53,14 +54,19 @@ fn attempt_update(repo: &Repository, remote: &mut Remote, commits_rw: Arc<RwLock
     let latest_commit_oid = repo.refname_to_id("refs/remotes/origin/master").unwrap();
     let mut commit = repo.find_commit(latest_commit_oid).unwrap();
     loop {
+        let time = commit.time();
+        let date = NaiveDateTime::from_timestamp(time.seconds() + time.offset_minutes() as i64 * 60, 0);
+        let date = date.format("%Y-%m-%d %H:%M UTC").to_string();
+        let hash = format!("{:.15}", commit.id());
+
         let build_commit = Commit {
-            revision:  format!("alpha-201-DEADCAFE"),
-            hash:      format!("{}", commit.id()),
             message:   commit.message().unwrap_or("NON-UTF8 MESSAGE").to_string(),
-            windows:   build_zips.contains(format!("{}_windows.zip", commit.id()).as_str()),
-            linux:     build_zips.contains(format!("{}_linux.zip", commit.id()).as_str()),
-            date_unix: commit.time().seconds()
+            windows:   build_zips.contains(format!("pfsandbox-{}-windows.zip", hash).as_str()),
+            linux:     build_zips.contains(format!("pfsandbox-{}-linux.tar.gz", hash).as_str()),
+            hash,
+            date
         };
+
         if netplay.is_none() /* && commit_has_netplay_tag */ {
             netplay = Some(build_commit.clone());
         }
@@ -87,10 +93,9 @@ pub struct Commits {
 
 #[derive(Serialize, Clone)]
 pub struct Commit {
-    pub revision:  String,
-    pub hash:      String,
-    pub message:   String,
-    pub windows:   bool,
-    pub linux:     bool,
-    pub date_unix: i64,
+    pub hash:    String,
+    pub message: String,
+    pub windows: bool,
+    pub linux:   bool,
+    pub date:    String,
 }

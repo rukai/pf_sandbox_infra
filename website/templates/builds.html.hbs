@@ -3,19 +3,27 @@
 {{#with netplay}}
     <h1>Netplay Build</h1>
     <table>
-        <td>{{date_unix}}</td>
-        <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{revision}}</a></td>
-        <td>{{message}}</td>
-        <td>
-            {{#if windows}}
-            <a href="builds/{{hash}}_windows.zip">Windows</a>
-            {{/if}}
-        </td>
-        <td>
-            {{#if linux}}
-            <a href="builds/{{hash}}_linux.zip">Linux</a>
-            {{/if}}
-        </td>
+        <tr>
+            <td>{{date}}</td>
+            <td>{{message}}</td>
+        </tr>
+        <tr>
+            <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{hash}}</a></td>
+            <td>
+                {{#if windows}}
+                <a href="builds/pfsandbox-{{hash}}-windows.zip" class="btn btn-sm btn-primary">
+                    <img src="static/desktop-download.svg">
+                    Windows
+                </a>
+                {{/if}}
+                {{#if linux}}
+                <a href="builds/pfsandbox-{{hash}}-linux.tar.gz" class="btn btn-sm btn-primary">
+                    <img src="static/desktop-download.svg">
+                    Linux
+                </a>
+                {{/if}}
+            </td>
+        </tr>
     </table>
 {{/with}}
 
@@ -24,20 +32,27 @@
     <table>
         {{#each builds}}
             <tr>
-                <td>{{date_unix}}</td>
-                <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{revision}}</a></td>
-                <td>{{message}}</td>
+                <td class="nowrap">{{date}}</td>
+                <td class="prewrap">{{message}}</td>
+            </tr>
+            <tr>
+                <td><a href="https://github.com/rukai/PF_Sandbox/commit/{{hash}}">{{hash}}</a></td>
                 <td>
                     {{#if windows}}
-                    <a href="builds/{{hash}}_windows.zip">Windows</a>
+                    <a href="builds/pfsandbox-{{hash}}-windows.zip" class="btn btn-sm btn-primary">
+                        <img src="static/desktop-download.svg">
+                        Windows
+                    </a>
                     {{/if}}
-                </td>
-                <td>
                     {{#if linux}}
-                    <a href="builds/{{hash}}_linux.zip">Linux</a>
+                    <a href="builds/pfsandbox-{{hash}}-linux.tar.gz" class="btn btn-sm btn-primary">
+                        <img src="static/desktop-download.svg">
+                        Linux
+                    </a>
                     {{/if}}
                 </td>
             </tr>
+            <tr class="row-spacer"></td>
         {{/each}}
     </table>
 </div>
