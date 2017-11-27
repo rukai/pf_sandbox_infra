@@ -3,7 +3,8 @@
 ## Production Setup (Ubuntu)
 
 ```bash
-sudo apt-get install gcc libssl-dev lib-ssh2-1-dev pkg-config
+sudo apt-get install nginx gcc libssl-dev lib-ssh2-1-dev pkg-config
+# Setup letsencrypt: https://certbot.eff.org
 newuser rubic
 su rubic
 cd ~
