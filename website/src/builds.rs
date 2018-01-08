@@ -60,9 +60,9 @@ fn attempt_update(repo: &Repository, remote: &mut Remote, commits_rw: Arc<RwLock
         let hash = format!("{:.15}", commit.id());
 
         let build_commit = Commit {
-            message:   commit.message().unwrap_or("NON-UTF8 MESSAGE").to_string(),
-            windows:   build_zips.contains(format!("pfsandbox-{}-windows.zip", hash).as_str()),
-            linux:     build_zips.contains(format!("pfsandbox-{}-linux.tar.gz", hash).as_str()),
+            message: commit.message().unwrap_or("NON-UTF8 MESSAGE").to_string(),
+            windows: build_zips.contains(format!("pfsandbox-{}-windows.zip", hash).as_str()),
+            linux:   build_zips.contains(format!("pfsandbox-{}-linux.tar.gz", hash).as_str()),
             hash,
             date
         };

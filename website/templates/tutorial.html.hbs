@@ -1,34 +1,30 @@
 {{#*inline "page"}}
-<h1>Editor Tutorial</h1>
+<h1 class="doc-heading">Editor Tutorial</h1>
 
 <p>Following this tutorial is a great way to get started with editing fighters in PF Sandbox.
-For a full reference of every operation check out the <a href="manual">Manual</a>.</p>
+For a full reference of every operation check out the <a href="manual">Manual</a>.
+All controller inputs mentioned in this tutorial use the <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/GCController_Layout.svg/450px-GCController_Layout.svg.png">Gamecube controller layout</a>.
+</p>
 
-<h2>Setup</h2>
+<h2 class="doc-heading">Setup</h2>
 
 <p>It is important to create your own package to put your fighters in.
 If you instead modify the example package, when an update is released for it, your modifications will be lost!</p>
 
-<h3>I have 2 GC controllers</h3>
-
 <p>Press '~' to open the command line in PF Sandbox.
 run command <code>:open_package my_package</code></p>
 
-<p>Insert a controller in ports 1 and 2.
-Then start a local game with the example fighter as player 1 and 2.</p>
+<p>Then start a local game with the example fighter as player 1 and 2.</p>
+Ensure your controller is player 1 (leftmost on the character select screen)
+Player 2 can be a CPU or a different controller.
+</p>
 
-<h3>I only have 1 GC controller</h3>
-
-<p>If you only have one GC controller you can force start a game with 2 fighters by launching PF Sandbox from your OS's command line: <code>pf_sandbox my_package -p2</code>
-You can then replug your controller between ports 1 and 2 to swap control of fighters.</p>
-
-<h2>Basics</h2>
+<h2 class="doc-heading">Basics</h2>
 
 <p>It will look like there is a stage with no fighters.
 However the fighters are there, they just have no collision boxes to make them visible.
-Start off by ensuring your controller is in port 1.
 Press <code>1</code> to select player 1.
-Now press F8 to toggle on ECB (Environment Collision Box) display
+Now press F8 to toggle on ECB (Environment Collision Box) display.
 Now we can see player 1's location as the newly appeared ECB.
 Now press F8 again to toggle it off.</p>
 
@@ -43,7 +39,7 @@ Now press F8 again to toggle it off.</p>
 
 <p>Unpause and move your fighter around.</p>
 
-<h2>Player states</h2>
+<h2 class="doc-heading">Player states</h2>
 
 <p>Pause the game, select your player (1) before continuing.
 Press F3, to enable player state debug information.
@@ -54,7 +50,7 @@ Your action will go from Idle -> JumpSquat.
 Press spacebar again your action will go from JumpSquat -> JumpF.
 Press spacebar again and again until your fighter lands.</p>
 
-<h2>Playing with colboxes</h2>
+<h2 class="doc-heading">Playing with colboxes</h2>
 
 <p>Ensure your fighter is in its Idle state again.
 Position your cursor, near your fighter (the green ECB), and press <code>F</code>.
@@ -79,7 +75,7 @@ Select all your colboxes and press D to delete them all.</p>
 
 <p>Play around with colboxes to your hearts content, then test out your creation in game.</p>
 
-<h2>Copying frames</h2>
+<h2 class="doc-heading">Copying frames</h2>
 
 <p>At the conclusion of your testing you would have surely noticed that your beloved colboxes can only be seen while the player is standing still.
 Lets fix that.</p>
@@ -97,7 +93,7 @@ Press B on your keyboard to paste the copied frame here.</p>
 <p>Repeat this process for all actions you can think of.
 Test out your fighter again, you can even disable the ECB (F3) if you want.</p>
 
-<h2>Multi-frame actions</h2>
+<h2 class="doc-heading">Multi-frame actions</h2>
 
 <p>Return your player to the idle state, pause the game, and select your player.
 Notice how the player state debug information says <code>frame: 0/0</code>.
@@ -120,14 +116,14 @@ Notice how each frame needs to complete before the fighter will lift off the gro
 
 <p>Restore your jumpsquat frames to something sensible by pressing N to delete frames, while in the jumpsquat action.</p>
 
-<h2>Camera</h2>
+<h2 class="doc-heading">Camera</h2>
 
 <p>As you are editing your fighter you will want to manually control the camera to better see your fighter.
 Zoom in and out with the scroll wheel on your mouse.
 Reposition the camera with middle click.
 To give control of the camera back to PF Sandbox press Backspace.</p>
 
-<h2>Command Line</h2>
+<h2 class="doc-heading">Command Line</h2>
 
 <p>Press '~' to open the command line in PF Sandbox.</p>
 <p>A command looks like this:</p>
@@ -137,7 +133,7 @@ By looking under the Accessors section, we can see that the package contains fig
 Lets further investigate fighters.</p>
 <p><code>package.fighters:help</code></p>
 
-<h2>Save/Reload</h2>
+<h2 class="doc-heading">Save/Reload</h2>
 <p>Run the command: <code>package:save</code>
 Wait for the 'Save completed successfully' message to appear.
 Close PF Sandbox and reopen it to verify that your changes are still there.</p>
@@ -145,7 +141,7 @@ Close PF Sandbox and reopen it to verify that your changes are still there.</p>
 <p>Make a change to your fighter and then run: <code>package:reload</code>
 Verify that your fighter is the same as when you last ran <code>package:save</code></p>
 
-<h2>Keys &amp; Context</h2>
+<h2 class="doc-heading">Keys &amp; Context</h2>
 
 <p>This is a keyed context vector of fighters, that means it contains multiple fighters. (accessible by both a key, an index and context)</p>
 <p>We can access a specific fighter via its filename, assuming you have a fighter with filename base_fighter.json then we can run:</p>
@@ -157,7 +153,7 @@ In this case it uses the fighter used by the player we have selected with 1234.<
 <p><code>package.fighters[?]:help</code></p>
 <p>If this doesnt display the fighter help, ensure you are in a game, pf sandbox is paused (spacebar) and you have selected a player (1)</p>
 
-<h2>Fighter data</h2>
+<h2 class="doc-heading">Fighter data</h2>
 
 <p>The fighter help text shows a lot of interesting fighter properties that I am sure you are itching to play with.</p>
 <p>This will get the number of aerial jumps the fighter can do.</p>
@@ -166,7 +162,7 @@ In this case it uses the fighter used by the player we have selected with 1234.<
 <p><code>package.fighters[?].air_jumps:set 99</code></p>
 <p>Try fiddling with this and other values you can find with the help command.</p>
 
-<h2>Descending the tree</h2>
+<h2 class="doc-heading">Descending the tree</h2>
 
 <p>Individual colboxes can be accessed and manipulated, however they are stored in an object in an object in an object in an object.
 To find them we are going to do some exploration with the help command.
@@ -185,12 +181,12 @@ This way we access the current action the selected player is in.</p>
 <p><code>package.fighters[?].actions[?].frames[?].colboxes:help</code></p>
 <p>Nice, now we know how to access colboxes, and (hopefully) better understand how frame data is structured.</p>
 
-<h2>Colbox resize</h2>
+<h2 class="doc-heading">Colbox resize</h2>
 
 <p>Now select a hitbox by clicking on it in pf_sandbox and run this command:</p>
 <p><code>package.fighters[?].actions[?].frames[?].colboxes[?].radius:set 10</code></p>
 
-<h2>Variants &amp; Hitboxes</h2>
+<h2 class="doc-heading">Variants &amp; Hitboxes</h2>
 
 <p>Select a colbox and run this command:</p>
 <p><code>package.fighters[?].actions[?].frames[?].colboxes[?].role:variant Hit</code></p>
@@ -201,7 +197,7 @@ Test it out in game.</p>
 <p>We set the base knockback for the hitbox to 9001
 Test this out in game!</p>
 
-<h2>Menu/Game difference</h2>
+<h2 class="doc-heading">Menu/Game difference</h2>
 
 <p>While in game commands are run on the game object.
 While in menu commands are run on the menu object.
