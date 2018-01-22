@@ -77,17 +77,16 @@ Select all your colboxes and press D to delete them all.</p>
 
 <h2 class="doc-heading">Copying frames</h2>
 
-<p>At the conclusion of your testing you would have surely noticed that your beloved colboxes can only be seen while the player is standing still.
+<p>At the conclusion of your testing you would have noticed that your colboxes can only be seen while the player is standing still. This is because only the idle action has any collision boxes.
 Lets fix that.</p>
 
-<p>You could manually recreate your design on every action the fighter has, but thats a lot of wasted effort.
-Instead lets copy the colboxes in the fighters idle state.
-To all his other states as a base to work on.</p>
+<p>You could manually recreate the same hitboxes on every action the fighter has but thats a lot of wasted effort.
+Instead lets copy the fighters idle action frame and paste it over the frames for the other states. Then we can tweak it from there.</p>
 
-<p>Ensure the fighter is in his idle state, the game is paused and your player is selected.
+<p>Ensure the fighter is in its idle state, the game is paused and your player is selected.
 Press V to copy the current frame.
 Press X on your controller and space on your keyboard.
-Now your player is in his jumpsquat frames.
+Now the player is in its jumpsquat frames.
 Press B on your keyboard to paste the copied frame here.</p>
 
 <p>Repeat this process for all actions you can think of.
@@ -97,8 +96,9 @@ Test out your fighter again, you can even disable the ECB (F3) if you want.</p>
 
 <p>Return your player to the idle state, pause the game, and select your player.
 Notice how the player state debug information says <code>frame: 0/0</code>.
-This means the action Idle has only 1 frame and we are currently on that one frame.
-We start counting at 0 here so that it fits in with other systems. (TODO: Although if Lua is used as the scripting language then it should really be 1-indexed)</p>
+This means the Idle action has only 1 frame and the player is currently on that one frame.
+<a href="https://en.wikipedia.org/wiki/Zero-based_numbering#Usage_in_programming_languages">0 refers to the first frame</a> as that is easier to work with when scripting.
+<!--(TODO: Although if Lua is used as the scripting language then it should really be 1-indexed)--></p>
 
 <p>Lets add another frame to this action by pressing M.
 We can now see we are on frame 1 of 1.
@@ -149,18 +149,18 @@ Verify that your fighter is the same as when you last ran <code>package:save</co
 <p>But thats generally not useful. (We dont want to have to check the filename of the fighter we are editing.)
 Instead we make use of the context system.
 By using <code>?</code> as our key, we tell PF Sandbox to automatically choose the fighter to access via in game context.
-In this case it uses the fighter used by the player we have selected with 1234.</p>
+In this case it uses the fighter used by the player we have selected with keys 1234.</p>
 <p><code>package.fighters[?]:help</code></p>
 <p>If this doesnt display the fighter help, ensure you are in a game, pf sandbox is paused (spacebar) and you have selected a player (1)</p>
 
 <h2 class="doc-heading">Fighter data</h2>
 
-<p>The fighter help text shows a lot of interesting fighter properties that I am sure you are itching to play with.</p>
-<p>This will get the number of aerial jumps the fighter can do.</p>
+<p>Lets play with some of the fighter properties we can see from running the help command.</p>
+<p>This will get the number of aerial jumps the fighter can do:</p>
 <p><code>package.fighters[?].air_jumps:get</code></p>
-<p>Run this command and try out the changes.</p>
+<p>Try setting the number of aerial jumps the fighter has:</p>
 <p><code>package.fighters[?].air_jumps:set 99</code></p>
-<p>Try fiddling with this and other values you can find with the help command.</p>
+<p>Try setting other properites listed by the help command and see what happens.</p>
 
 <h2 class="doc-heading">Descending the tree</h2>
 
@@ -200,10 +200,10 @@ Test this out in game!</p>
 <h2 class="doc-heading">Menu/Game difference</h2>
 
 <p>While in game commands are run on the game object.
-While in menu commands are run on the menu object.
+However while in the menu, commands are run on the menu object.
 Both contain the current package so you can always access that, but the rest is different.
 So commands that work in game wont necessarily work in the menu and vice versa.
-Use :help while in game and in menu to see the differences.</p>
+Use <code>:help</code> while in game and in menu to see the differences.</p>
 {{/inline}}
 
 {{~> base title="PF Sandbox | Editor Tutorial" page_tutorial=true ~}}

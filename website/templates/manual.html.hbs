@@ -225,7 +225,7 @@ Any collisionbox can now be click and drag'ed around the root box.</p>
 Alternatively you can use the pf_cli binary to send commands via your OS's terminal to PF Sandbox.
 Note that when using pf_cli you will need to escape characters that have special meaning to your shell. e.g. quotes</p>
 
-<p>The pf engine command line is very powerful, at the price of complexity.
+<p>The PF Sandbox command line is very powerful, at the price of complexity.
 We recommend you work through the Command Line section of the <a href="tutorial">Editor Tutorial</a> if you have not yet worked with the PF Sandbox command line tool.
 You can then come back here if you ever need a reference.</p>
 
@@ -330,7 +330,7 @@ Objects are chained together with '.' and indexed by [] like this:</p>
 <p><code>package.fighters["fighter.json"].actions[0].frames[0].colboxes[2].radius:set 10</code></p>
 
 <p>However how are you supposed to know all of these indexes? o.0
-Instead you can let PF engine use context to know what you want to modify.
+Instead you can let PF Sandbox use context to know what you want to modify.
 Select the hitboxes you want in game then run:</p>
 
 <p><code>pf package.fighters[?].actions[?].frames[?].colboxes[?].radius:set 10</code></p>
