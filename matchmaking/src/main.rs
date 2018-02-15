@@ -101,7 +101,7 @@ fn main() {
 
 fn respond(send_to: SocketAddr, addresses: Vec<SocketAddr>, socket: &UdpSocket) {
     let response = MatchMakingResponse { addresses };
-    let mut data = bincode::serialize(&response, bincode::Infinite).unwrap();
+    let mut data = bincode::serialize(&response).unwrap();
     data.insert(0, 0x00);
     socket.send_to(&data, send_to).unwrap();
     println!("Sent message to {}", send_to);
