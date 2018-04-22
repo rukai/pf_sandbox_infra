@@ -8,7 +8,7 @@ sudo apt-get install nginx gcc libssl-dev libssh2-1-dev pkg-config
 newuser rubic
 su rubic
 cd ~
-curl https://sh.rustup.rs -sSf | sh # select nightly
+curl https://sh.rustup.rs -sSf | sh # use default settings
 echo "PATH=$HOME/.cargo/bin:$PATH" >> .profile
 echo "ROCKET_ENV=prod" >> .profile
 echo "TERM=xterm" >> .profile
