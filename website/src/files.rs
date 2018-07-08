@@ -1,8 +1,8 @@
 use std::path::PathBuf;
-use std::env;
+use dirs;
 
 pub fn get_path() -> PathBuf {
-    match env::home_dir() {
+    match dirs::home_dir() {
         Some (mut home) => {
             home.push("PF_Sandbox_Website");
             home
