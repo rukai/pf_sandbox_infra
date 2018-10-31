@@ -2,6 +2,7 @@
 name = "pf_sandbox_website"
 version = "0.1.0"
 authors = ["Lucas Kent <rubickent@gmail.com>"]
+edition = "2018"
 
 [dependencies]
 dirs = "1"

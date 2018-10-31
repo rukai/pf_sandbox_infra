@@ -1,4 +1,4 @@
-#![feature(plugin, decl_macro, custom_derive)]
+#![feature(plugin, custom_derive)]
 #![plugin(rocket_codegen)]
 
              extern crate chrono;
@@ -20,7 +20,7 @@ use std::sync::{RwLock, Arc};
 pub mod builds;
 pub mod files;
 
-use builds::{Commits, Commit};
+use crate::builds::{Commits, Commit};
 
 #[get("/")]
 fn index() -> Template {
