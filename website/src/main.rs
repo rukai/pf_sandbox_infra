@@ -1,16 +1,12 @@
-#![feature(plugin, custom_derive)]
-#![plugin(rocket_codegen)]
+#![feature(proc_macro_hygiene, decl_macro)]
 
-             extern crate chrono;
-             extern crate dirs;
-             extern crate rocket_contrib;
-             extern crate rocket;
+#[macro_use] extern crate rocket;
 #[macro_use] extern crate serde_derive;
-             extern crate git2;
 
-use rocket_contrib::Template;
+use rocket_contrib::templates::Template;
 use rocket::response::NamedFile;
 use rocket::State;
+use rocket::request::Form;
 
 use std::path::{Path, PathBuf};
 use std::env;
@@ -45,7 +41,7 @@ fn tas() -> Template {
 #[derive(FromForm)]
 struct BuildsPageRequest {
     page:     Option<u32>,
-    per_page: Option<u32>
+    per_page: Option<u32>,
 }
 
 #[derive(Serialize, Clone)]
@@ -56,20 +52,20 @@ pub struct BuildsPage {
     pub last_page:        u32,
     pub next_page:        Option<u32>,
     pub prev_page:        Option<u32>,
-    pub prev_page_enable: bool, // seperate flag because otherwise handlebars doesnt handle when prev_page == 0
+    pub prev_page_enable: bool, // separate flag because otherwise handlebars doesnt handle when prev_page == 0
 }
 
 #[get("/builds")]
 fn builds(builds_rw: State<Arc<RwLock<Commits>>>) -> Template {
-    let builds_page = BuildsPageRequest {
+    let builds_page = Form(BuildsPageRequest {
         page:     None,
-        per_page: None
-    };
+        per_page: None,
+    });
     builds_paginated(builds_rw, builds_page)
 }
 
-#[get("/builds?<request>")]
-fn builds_paginated(builds_rw: State<Arc<RwLock<Commits>>>, request: BuildsPageRequest) -> Template {
+#[get("/builds?<request..>")]
+fn builds_paginated(builds_rw: State<Arc<RwLock<Commits>>>, request: Form<BuildsPageRequest>) -> Template {
     let current_page = request.page.unwrap_or(0);
     let per_page = request.per_page.unwrap_or(20);
 
