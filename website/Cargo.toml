@@ -6,10 +6,13 @@ edition = "2018"
 
 [dependencies]
 dirs = "1"
-rocket = { git = "https://github.com/rukai/Rocket", branch = "allow_creating_form" }
-rocket_contrib = { git = "https://github.com/rukai/Rocket", branch = "allow_creating_form", features = ["handlebars_templates"] }
+#rocket = "0.4" # waiting on release of 0.4
+rocket = { git = "https://github.com/SergioBenitez/Rocket" }
+rocket_contrib = { git = "https://github.com/SergioBenitez/Rocket", features = ["handlebars_templates"] }
 serde = "1"
 serde_derive = "1"
 serde_json = "1"
-git2 = "0.7"
+#git2 = "0.8" # waiting on release of 0.8
+git2 = { git = "https://github.com/alexcrichton/git2-rs", features = ["vendored-openssl"] }
+# waiting on release with vendored feature
 chrono = { version = "0.4", features = ["serde"] }
