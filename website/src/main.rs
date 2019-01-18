@@ -16,7 +16,7 @@ use std::sync::{RwLock, Arc};
 pub mod builds;
 pub mod files;
 
-use crate::builds::{Commits, Commit};
+use builds::{Commits, Commit};
 
 #[get("/")]
 fn index() -> Template {
